@@ -19,12 +19,12 @@ public class Player : MonoBehaviour
     private float speed = 12.0f;
     private float rotationSpeed = 1400.0f;
     private Vector2 target;
-    private Vector2 position;
     private GameObject rotationTarget;
 
     public int health;
 
     private GameObject bullet;
+    public GameObject mySquare;
 
     // Start is called before the first frame update
     void Start()
@@ -73,7 +73,19 @@ public class Player : MonoBehaviour
         }
         if (PressedKey(KEY.ACTION))
         {
-            FireBullet();
+            switch (shape)
+            {
+                case (SHAPE.TRIANGLE):
+                    FireBullet();
+                    break;
+                case (SHAPE.CIRCLE):
+                    TeleportToSquare();
+                    Debug.Log("CIRCLE!!!!!");
+                    break;
+                case (SHAPE.SQUARE):
+                    break;
+            }
+            Debug.Log("Someone tried to use an ability!");
         }
         float step = speed * Time.deltaTime;
         transform.position = Vector2.MoveTowards(transform.position, target, step);
@@ -81,13 +93,8 @@ public class Player : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotationTarget.transform.rotation, step);
         if (health <= 0)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
-    }
-
-    private void FixedUpdate()
-    {
-        
     }
 
     private void TryMove(Vector2Int direction)
@@ -101,7 +108,6 @@ public class Player : MonoBehaviour
     public void Move(Vector2Int direction)
     {
         StageGrid.instance.PlayerMove((Vector2Int)gridPosition, direction);
-        position = gameObject.transform.position;
         gridPosition.y += direction.y;
         gridPosition.x += direction.x;
         target = (Vector2)StageGrid.instance.GetWorldFromCell(gridPosition);
@@ -160,15 +166,40 @@ public class Player : MonoBehaviour
         return -1;
     }
 
-    private bool TryMoveForward()
-    {
-        return true;
-    }
-
     private void FireBullet()
     {
         GameObject b = Instantiate(bullet, transform.position, transform.rotation);
         b.GetComponent<BulletBehavior>().team = team;
         b.GetComponent<Rigidbody2D>().velocity = (transform.rotation * Vector3.up) * BULLET_SPEED;
+    }
+
+    private void TeleportToSquare()
+    {
+        Player sq = mySquare.GetComponent<Player>();
+        StageGrid.STATUS[,] s = StageGrid.instance.GetSurroundings((Vector2Int)sq.gridPosition);
+        for(int i = 0; i < s.GetLength(0); i++)
+        {
+            for (int j = 0; j < s.GetLength(1); j++)
+            {
+                Debug.Log(i + ", " + j + " is " + s[i, j]);
+                if(s[i, j] == StageGrid.STATUS.UNOCCUPIED)
+                {
+                    StageGrid.instance.PlayerMove((Vector2Int)gridPosition, new Vector2Int(sq.gridPosition.x + i - 1 - gridPosition.x, sq.gridPosition.y + j - 1 - gridPosition.y));
+                    transform.position = mySquare.transform.position + new Vector3(i - 1, j - 1, 0);
+                    target = transform.position;
+                    return;
+                }
+            }
+        }
+    }
+
+    private void MoveShield()
+    {
+
+    }
+
+    private void OnDestroy()
+    {
+        StageGrid.instance.PlayerDied((Vector2Int)gridPosition);
     }
 }
