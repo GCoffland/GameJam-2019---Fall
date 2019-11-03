@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
 
     private GameObject bullet;
     public GameObject mySquare;
+    public GameObject shield;
+    private Quaternion shieldRot;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +42,7 @@ public class Player : MonoBehaviour
         target = transform.position;
         rotationTarget = new GameObject();
         rotationTarget.transform.rotation = transform.rotation;
+        shieldRot = Quaternion.identity;
     }
 
     // Update is called once per frame
@@ -80,20 +83,29 @@ public class Player : MonoBehaviour
                     break;
                 case (SHAPE.CIRCLE):
                     TeleportToSquare();
-                    Debug.Log("CIRCLE!!!!!");
                     break;
                 case (SHAPE.SQUARE):
+                    MoveShield();
                     break;
             }
-            Debug.Log("Someone tried to use an ability!");
+            //Debug.Log("Someone tried to use an ability!");
         }
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void FixedUpdate()
+    {
         float step = speed * Time.deltaTime;
         transform.position = Vector2.MoveTowards(transform.position, target, step);
         step = rotationSpeed * Time.deltaTime;
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotationTarget.transform.rotation, step);
-        if (health <= 0)
+        if(shape == SHAPE.SQUARE)
         {
-            Destroy(gameObject);
+            float step1 = rotationSpeed * Time.deltaTime;
+            shield.transform.rotation = Quaternion.RotateTowards(shield.transform.rotation, shieldRot, step1);
         }
     }
 
@@ -175,6 +187,10 @@ public class Player : MonoBehaviour
 
     private void TeleportToSquare()
     {
+        if(mySquare == null)
+        {
+            return;
+        }
         Player sq = mySquare.GetComponent<Player>();
         StageGrid.STATUS[,] s = StageGrid.instance.GetSurroundings((Vector2Int)sq.gridPosition);
         for(int i = 0; i < s.GetLength(0); i++)
@@ -195,11 +211,24 @@ public class Player : MonoBehaviour
 
     private void MoveShield()
     {
-
+        shieldRot = rotationTarget.transform.rotation;
     }
 
     private void OnDestroy()
     {
         StageGrid.instance.PlayerDied((Vector2Int)gridPosition);
+    }
+
+    public void TakeDamageFromDirection(int damage, Vector2 direction, Vector2 bullet_pos)
+    {
+        Debug.Log(Vector2.Dot((shield.transform.rotation * Vector2.up).normalized, direction.normalized));
+        if(Vector2.Dot((shield.transform.rotation * Vector2.up).normalized, direction.normalized) >= -0.7)
+        {
+            health -= damage;
+        }
+        else
+        {
+            Debug.Log("Blocked " + damage + " damage");
+        }
     }
 }
