@@ -16,9 +16,11 @@ public class Player : MonoBehaviour
     public TEAM team;
     public Vector3Int gridPosition;
 
-    private float speed = 5.0f;
+    private float speed = 12.0f;
+    private float rotationSpeed = 1400.0f;
     private Vector2 target;
     private Vector2 position;
+    private GameObject rotationTarget;
 
     public int health;
 
@@ -36,6 +38,8 @@ public class Player : MonoBehaviour
         startPos.y += 0.5f;
         transform.position = startPos;
         target = transform.position;
+        rotationTarget = new GameObject();
+        rotationTarget.transform.rotation = transform.rotation;
     }
 
     // Update is called once per frame
@@ -48,19 +52,24 @@ public class Player : MonoBehaviour
         {
             Vector2Int direction = new Vector2Int(0,0);
             float rotation = transform.eulerAngles.z;
-            if(rotation < 30) { direction = new Vector2Int(0, 1); }
-            else if (rotation < 120) { direction = new Vector2Int(-1, 0); }
-            else if (rotation < 210) { direction = new Vector2Int(0, -1); }
-            else if (rotation < 300) { direction = new Vector2Int(1, 0); }
+            if(rotation < 22.5) { direction = new Vector2Int(0, 1); }
+            else if (rotation < 67.5) { direction = new Vector2Int(-1, 1); }
+            else if (rotation < 112.5) { direction = new Vector2Int(-1, 0); }
+            else if (rotation < 157.5) { direction = new Vector2Int(-1, -1); }
+            else if (rotation < 202.5) { direction = new Vector2Int(0, -1); }
+            else if (rotation < 247.5) { direction = new Vector2Int(1, -1); }
+            else if (rotation < 292.5) { direction = new Vector2Int(1, 0); }
+            else if (rotation < 337.5) { direction = new Vector2Int(1, 1); }
+            else if (rotation < 360.5) { direction = new Vector2Int(0, 1); }
             TryMove(direction);
         }
         if (PressedKey(KEY.LEFT))
         {
-            transform.Rotate(new Vector3(0,0,90));
+            rotationTarget.transform.Rotate(new Vector3(0, 0, 90));
         }
         if (PressedKey(KEY.RIGHT))
         {
-            transform.Rotate(new Vector3(0, 0, -90));
+            rotationTarget.transform.Rotate(new Vector3(0, 0, -90));
         }
         if (PressedKey(KEY.ACTION))
         {
@@ -68,6 +77,8 @@ public class Player : MonoBehaviour
         }
         float step = speed * Time.deltaTime;
         transform.position = Vector2.MoveTowards(transform.position, target, step);
+        step = rotationSpeed * Time.deltaTime;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, rotationTarget.transform.rotation, step);
         if (health <= 0)
         {
             Destroy(this);
