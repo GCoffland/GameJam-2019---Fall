@@ -73,17 +73,18 @@ public class StageGrid : MonoBehaviour
         return tiles;
     }
 
-    public STATUS[,] GetSurroundings(int x, int y)
+    public STATUS[,] GetSurroundings(Vector2Int position)
     {
+        Vector2Int pos = new Vector2Int(position.x - tilemaps[0].cellBounds.xMin, position.y - tilemaps[0].cellBounds.yMin);
         STATUS[,] surroundings = new STATUS[3,3];
         for(int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
             {
                 surroundings[i, j] = STATUS.UNTRAVERSABLE;
-                if(x - 1 + i >= 0 && x - 1 + i <= tilemaps[0].cellBounds.xMax - tilemaps[0].cellBounds.xMin && y - 1 + j >= 0 && y - 1 + j <= tilemaps[0].cellBounds.yMax - tilemaps[0].cellBounds.yMin)
+                if(pos.x - 1 + i >= 0 && pos.x - 1 + i <= worldStatusArray.GetLength(0) && pos.y - 1 + j >= 0 && pos.y - 1 + j <= worldStatusArray.GetLength(1))
                 {
-                    surroundings[i, j] = worldStatusArray[x - 1 + i, y - 1 + i];
+                    surroundings[i, j] = worldStatusArray[pos.x - 1 + i, pos.y - 1 + i];
                 }
             }
         }
@@ -102,7 +103,7 @@ public class StageGrid : MonoBehaviour
     {
 
         Vector3Int pos = new Vector3Int(current_pos.x - origin.x, current_pos.y - origin.y, origin.z);
-        Debug.Log("Position is: " + current_pos + ", pos is " + pos);
+        Debug.Log("Position is: " + pos + ", Destination is " + (pos + (Vector3Int)displacement));
         worldStatusArray[pos.x, pos.y] = STATUS.UNOCCUPIED;
         worldStatusArray[pos.x + displacement.x, pos.y + displacement.y] = STATUS.OCCUPIED;
     }
@@ -120,5 +121,11 @@ public class StageGrid : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void PlayerDied(Vector2Int current_pos)
+    {
+        Vector3Int pos = new Vector3Int(current_pos.x - origin.x, current_pos.y - origin.y, origin.z);
+        worldStatusArray[pos.x, pos.y] = STATUS.UNOCCUPIED;
     }
 }
