@@ -18,11 +18,6 @@ public class Player : MonoBehaviour
 
     private float speed = 5.0f;
     private Vector2 target;
-<<<<<<< HEAD
-
-=======
-    private Vector2 position;
->>>>>>> d10dfd52d5f7df69a6e3048ebded3a389530f0bc
 
     public int health;
 
@@ -69,7 +64,6 @@ public class Player : MonoBehaviour
         }
         if (PressedKey(KEY.ACTION))
         {
-<<<<<<< HEAD
             switch (shape)
             {
                 case (SHAPE.TRIANGLE):
@@ -83,9 +77,6 @@ public class Player : MonoBehaviour
                     break;
             }
             Debug.Log("Someone tried to use an ability!");
-=======
-            FireBullet();
->>>>>>> d10dfd52d5f7df69a6e3048ebded3a389530f0bc
         }
         float step = speed * Time.deltaTime;
         transform.position = Vector2.MoveTowards(transform.position, target, step);
@@ -103,29 +94,9 @@ public class Player : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
     public void Move(Vector2Int direction)
     {
         StageGrid.instance.PlayerMove((Vector2Int)gridPosition, direction);
-=======
-    private void FixedUpdate()
-    {
-        
-    }
-
-    private void TryMove(Vector2Int direction)
-    {
-        if (StageGrid.instance.PlayerIsMoveValid((Vector2Int)gridPosition, direction))
-        {
-            Move(direction);
-        }
-    }
-
-    public void Move(Vector2Int direction)
-    {
-        StageGrid.instance.PlayerMove((Vector2Int)gridPosition, direction);
-        position = gameObject.transform.position;
->>>>>>> d10dfd52d5f7df69a6e3048ebded3a389530f0bc
         gridPosition.y += direction.y;
         gridPosition.x += direction.x;
         target = (Vector2)StageGrid.instance.GetWorldFromCell(gridPosition);
