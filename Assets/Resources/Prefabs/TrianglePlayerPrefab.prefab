@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3523492595149152905}
   - component: {fileID: 605752078030708056}
   - component: {fileID: 7351050641056752530}
+  - component: {fileID: 5564206999213761116}
   m_Layer: 0
   m_Name: TrianglePlayerPrefab
   m_TagString: Player
@@ -95,11 +96,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca65bb32c4b89ef4398222ca9ed42436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldown: 0
+  invincibilityFrames: 0
   shape: 1
   team: 0
   gridPosition: {x: 0, y: 0, z: 0}
   health: 0
   mySquare: {fileID: 0}
+  shield: {fileID: 0}
 --- !u!60 &7351050641056752530
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -131,6 +135,27 @@ PolygonCollider2D:
       - {x: 0.42999998, y: -0.42999998}
       - {x: 0.42999998, y: -0.39}
       - {x: 0.03, y: 0.42999998}
+--- !u!50 &5564206999213761116
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3523492595149152907}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &5130387748002107951
 GameObject:
   m_ObjectHideFlags: 0
