@@ -42,8 +42,8 @@ public class GameScript : MonoBehaviour
                 if (s[i, j] == StageGrid.STATUS.UNOCCUPIED)
                 {
                     StageGrid.instance.SetPlayerAt(new Vector2Int(pos.x + i - 1, pos.y + j - 1));
-                    p.transform.position = pos + new Vector2(i - 1, j - 1);
-                    p.target = pos + new Vector2(i - 1, j - 1);
+                    p.transform.position = pos + new Vector2(i - 1 + 0.5f, j - 1 + 0.5f);
+                    p.target = p.transform.position;
                     Debug.Log("Resing player at: " + new Vector2Int(pos.x + i - 1, pos.y + j - 1));
                     Debug.Log("Activating Player");
                     p.gameObject.SetActive(true);
