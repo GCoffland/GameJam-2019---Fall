@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PressSToStart : MonoBehaviour
+public class JumpToGameScript : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -17,12 +17,11 @@ public class PressSToStart : MonoBehaviour
         if (Input.GetButtonDown("Start"))
         {
             Player.players = new List<Player>();
-            SceneManager.LoadScene("TestPlayScene");
+            SceneManager.LoadScene("GamePlayScene");
         }
         if (Input.GetButtonDown("Start2"))
         {
-            Player.players = new List<Player>();
-            SceneManager.LoadScene("GamePlayScene");
+            SceneManager.LoadScene("Controls");
         }
     }
 }

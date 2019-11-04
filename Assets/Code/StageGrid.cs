@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using MidiJack;
 
 public class StageGrid : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class StageGrid : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        MidiDriver.Reset();
         instance = this;
         tilemaps = new List<Tilemap>();
         for(int i = 0; i < gameObject.transform.childCount; i++)

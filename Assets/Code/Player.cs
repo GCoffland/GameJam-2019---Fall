@@ -306,10 +306,10 @@ public class Player : MonoBehaviour
         shieldRot = rotationTarget.transform.rotation;
     }
 
-    private void OnDestroy()
+    /*private void OnDestroy()
     {
         StageGrid.instance.PlayerDied((Vector2Int)gridPosition);
-    }
+    }*/
 
     public void TakeDamageFromDirection(int damage, Vector2 direction, Vector2 bullet_pos)
     {

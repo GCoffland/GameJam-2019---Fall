@@ -273,7 +273,12 @@ namespace MidiJack
 
         #region Singleton Class Instance
 
-        static MidiDriver _instance;
+        public static MidiDriver _instance;
+
+        public static void Reset()
+        {
+            _instance = new MidiDriver();
+        }
 
         public static MidiDriver Instance {
             get {
