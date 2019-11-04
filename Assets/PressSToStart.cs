@@ -19,10 +19,5 @@ public class PressSToStart : MonoBehaviour
             Player.players = new List<Player>();
             SceneManager.LoadScene("TestPlayScene");
         }
-        if (Input.GetButtonDown("Start2"))
-        {
-            Player.players = new List<Player>();
-            SceneManager.LoadScene("GamePlayScene");
-        }
     }
 }
