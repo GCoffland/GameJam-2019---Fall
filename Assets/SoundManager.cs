@@ -20,12 +20,12 @@ public class SoundManager : MonoBehaviour
 
     public void Fire()
     {
-        fire.PlayOneShot(fireClip, 0.75f);
+        fire.PlayOneShot(fireClip, 0.55f);
     }
 
     public void Tink()
     {
-        fire.PlayOneShot(tinkClip, 0.55f);
+        fire.PlayOneShot(tinkClip, 1.00f);
     }
 
     public void Teleport()
@@ -35,11 +35,11 @@ public class SoundManager : MonoBehaviour
 
     public void Stun()
     {
-        fire.PlayOneShot(stunClip, 1.0f);
+        fire.PlayOneShot(stunClip, 0.40f);
     }
 
     public void Die()
     {
-        fire.PlayOneShot(dieClip, 1.0f);
+        fire.PlayOneShot(dieClip, 0.6f);
     }
 }
