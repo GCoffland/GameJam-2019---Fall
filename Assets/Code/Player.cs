@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
 
     const float BULLET_SPEED = 20;
 
+    public int cooldown = 0;
+
     public SHAPE shape;
     public TEAM team;
     public Vector3Int gridPosition;
@@ -78,19 +80,25 @@ public class Player : MonoBehaviour
         }
         if (PressedKey(KEY.ACTION))
         {
-            switch (shape)
+            if (cooldown <= 0)
+            {
+                switch (shape)
             {
                 case (SHAPE.TRIANGLE):
-                    FireBullet();
-                    SoundManager.instance.Fire();
-                    break;
+                        FireBullet();
+                        cooldown = 120;
+                        SoundManager.instance.Fire();
+                break;
                 case (SHAPE.CIRCLE):
-                    TeleportToSquare();
-                    SoundManager.instance.Teleport();
-                    break;
+                        TeleportToSquare();
+                        cooldown = 300;
+                        SoundManager.instance.Teleport();
+                break;
                 case (SHAPE.SQUARE):
-                    MoveShield();
-                    break;
+                        cooldown = 0;
+                        MoveShield();
+                break;
+                }
             }
             //Debug.Log("Someone tried to use an ability!");
         }
@@ -104,6 +112,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        cooldown--;
         float step = speed * Time.deltaTime;
         transform.position = Vector2.MoveTowards(transform.position, target, step);
         step = rotationSpeed * Time.deltaTime;
