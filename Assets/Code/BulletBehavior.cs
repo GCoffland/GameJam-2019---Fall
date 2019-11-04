@@ -5,11 +5,12 @@ using UnityEngine;
 public class BulletBehavior : MonoBehaviour
 {
     public Player.TEAM team;
+    Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -23,13 +24,13 @@ public class BulletBehavior : MonoBehaviour
         Player p = collision.gameObject.GetComponent<Player>();
         if (p != null)
         {
-            if(p.team == team)
+            if(p.team == team || collision.tag == "Shield")
             {
                 
             }
             else
             {
-                p.health--;
+                p.TakeDamageFromDirection(1, rb.velocity, transform.position);
                 Destroy(gameObject);
             }
         }

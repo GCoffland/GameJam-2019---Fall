@@ -21,7 +21,7 @@ public class StageGrid : MonoBehaviour
             tilemaps.Add(gameObject.transform.GetChild(i).GetComponent<Tilemap>());
         }
         worldStatusArray = new STATUS[tilemaps[0].cellBounds.xMax - tilemaps[0].cellBounds.xMin, tilemaps[0].cellBounds.yMax - tilemaps[0].cellBounds.yMin];
-        Debug.Log(worldStatusArray.GetLength(0) + ", " + worldStatusArray.GetLength(1));
+        //Debug.Log(worldStatusArray.GetLength(0) + ", " + worldStatusArray.GetLength(1));
         origin.x = tilemaps[0].cellBounds.xMin;
         origin.y = tilemaps[0].cellBounds.yMin;
         origin.z = tilemaps[0].cellBounds.zMin;
@@ -84,8 +84,9 @@ public class StageGrid : MonoBehaviour
                 surroundings[i, j] = STATUS.UNTRAVERSABLE;
                 if(pos.x - 1 + i >= 0 && pos.x - 1 + i <= worldStatusArray.GetLength(0) && pos.y - 1 + j >= 0 && pos.y - 1 + j <= worldStatusArray.GetLength(1))
                 {
-                    surroundings[i, j] = worldStatusArray[pos.x - 1 + i, pos.y - 1 + i];
+                    surroundings[i, j] = worldStatusArray[pos.x - 1 + i, pos.y - 1 + j];
                 }
+                //Debug.Log(surroundings[i, j]);
             }
         }
         return surroundings;
@@ -103,7 +104,7 @@ public class StageGrid : MonoBehaviour
     {
 
         Vector3Int pos = new Vector3Int(current_pos.x - origin.x, current_pos.y - origin.y, origin.z);
-        Debug.Log("Position is: " + pos + ", Destination is " + (pos + (Vector3Int)displacement));
+        //Debug.Log("Position is: " + pos + ", Destination is " + (pos + (Vector3Int)displacement));
         worldStatusArray[pos.x, pos.y] = STATUS.UNOCCUPIED;
         worldStatusArray[pos.x + displacement.x, pos.y + displacement.y] = STATUS.OCCUPIED;
     }
