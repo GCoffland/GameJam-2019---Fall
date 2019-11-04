@@ -130,6 +130,7 @@ public class Player : MonoBehaviour
                         if(gridPosition.x == players[i].gridPosition.x && gridPosition.y == players[i].gridPosition.y)
                         {
                             Debug.Log("Stunned " + players[i].shape + " on team " + players[i].team + "!");
+                            SoundManager.instance.Stun();
                         }
                     }
                 }
@@ -256,6 +257,7 @@ public class Player : MonoBehaviour
         else
         {
             Debug.Log("Blocked " + damage + " damage");
+            SoundManager.instance.Tink();
         }
     }
 }

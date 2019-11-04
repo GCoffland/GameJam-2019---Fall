@@ -24,9 +24,10 @@ public class BulletBehavior : MonoBehaviour
         Player p = collision.gameObject.GetComponent<Player>();
         if (p != null)
         {
-            if(p.team == team || collision.tag == "Shield")
+            if(p.team == team) { }
+            else if (collision.tag == "Shield")
             {
-                
+                SoundManager.instance.Tink();
             }
             else
             {
