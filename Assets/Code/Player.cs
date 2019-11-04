@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     public enum TEAM { ONE, TWO, THREE, FOUR, FIVE };
     public enum KEY { LEFT, RIGHT, FORWARD, ACTION};
 
+    public bool immortal = false;
+
     const float BULLET_SPEED = 20;
 
     public int cooldown = 0;
@@ -139,7 +141,7 @@ public class Player : MonoBehaviour
                 //Debug.Log("Someone tried to use an ability!");
             }
         }
-        if (health <= 0)
+        if (health <= 0 && !immortal)
         {
             CameraScript.instance.Shake(45, 0.55f);
             SoundManager.instance.Die();

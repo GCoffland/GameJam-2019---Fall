@@ -266,6 +266,11 @@ PrefabInstance:
       propertyPath: mySquare
       value: 
       objectReference: {fileID: 1484656351}
+    - target: {fileID: 6546563066980398250, guid: 202352e06a37a664689e864adc600ba4,
+        type: 3}
+      propertyPath: immortal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5199053454099124934, guid: 202352e06a37a664689e864adc600ba4,
         type: 3}
       propertyPath: m_Color.r
@@ -395,6 +400,11 @@ PrefabInstance:
       propertyPath: mySquare
       value: 
       objectReference: {fileID: 1352395663}
+    - target: {fileID: 605752078030708056, guid: dcf2a0706ec459c468eea4d3d7476161,
+        type: 3}
+      propertyPath: immortal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6641454010902503804, guid: dcf2a0706ec459c468eea4d3d7476161,
         type: 3}
       propertyPath: m_Color.r
@@ -504,6 +514,11 @@ PrefabInstance:
       propertyPath: mySquare
       value: 
       objectReference: {fileID: 906982968}
+    - target: {fileID: 605752078030708056, guid: dcf2a0706ec459c468eea4d3d7476161,
+        type: 3}
+      propertyPath: immortal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6641454010902503804, guid: dcf2a0706ec459c468eea4d3d7476161,
         type: 3}
       propertyPath: m_Color.r
@@ -618,6 +633,11 @@ PrefabInstance:
       propertyPath: mySquare
       value: 
       objectReference: {fileID: 872373842}
+    - target: {fileID: 91819024967632882, guid: 9bd0d3504a28cc646b7042d040ed01a2,
+        type: 3}
+      propertyPath: immortal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8247708946437982034, guid: 9bd0d3504a28cc646b7042d040ed01a2,
         type: 3}
       propertyPath: m_Color.r
@@ -732,6 +752,11 @@ PrefabInstance:
       propertyPath: mySquare
       value: 
       objectReference: {fileID: 872373842}
+    - target: {fileID: 605752078030708056, guid: dcf2a0706ec459c468eea4d3d7476161,
+        type: 3}
+      propertyPath: immortal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6641454010902503804, guid: dcf2a0706ec459c468eea4d3d7476161,
         type: 3}
       propertyPath: m_Color.r
@@ -955,6 +980,11 @@ PrefabInstance:
       propertyPath: mySquare
       value: 
       objectReference: {fileID: 1352395663}
+    - target: {fileID: 6546563066980398250, guid: 202352e06a37a664689e864adc600ba4,
+        type: 3}
+      propertyPath: immortal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5199053454099124934, guid: 202352e06a37a664689e864adc600ba4,
         type: 3}
       propertyPath: m_Color.r
@@ -1084,6 +1114,11 @@ PrefabInstance:
       propertyPath: mySquare
       value: 
       objectReference: {fileID: 11187510}
+    - target: {fileID: 605752078030708056, guid: dcf2a0706ec459c468eea4d3d7476161,
+        type: 3}
+      propertyPath: immortal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6641454010902503804, guid: dcf2a0706ec459c468eea4d3d7476161,
         type: 3}
       propertyPath: m_Color.r
@@ -22293,6 +22328,11 @@ PrefabInstance:
       propertyPath: mySquare
       value: 
       objectReference: {fileID: 906982968}
+    - target: {fileID: 6546563066980398250, guid: 202352e06a37a664689e864adc600ba4,
+        type: 3}
+      propertyPath: immortal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5199053454099124934, guid: 202352e06a37a664689e864adc600ba4,
         type: 3}
       propertyPath: m_Color.g
@@ -22412,6 +22452,11 @@ PrefabInstance:
       propertyPath: mySquare
       value: 
       objectReference: {fileID: 1352395663}
+    - target: {fileID: 91819024967632882, guid: 9bd0d3504a28cc646b7042d040ed01a2,
+        type: 3}
+      propertyPath: immortal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8247708946437982034, guid: 9bd0d3504a28cc646b7042d040ed01a2,
         type: 3}
       propertyPath: m_Color.r
@@ -22592,6 +22637,11 @@ PrefabInstance:
       propertyPath: mySquare
       value: 
       objectReference: {fileID: 11187510}
+    - target: {fileID: 6546563066980398250, guid: 202352e06a37a664689e864adc600ba4,
+        type: 3}
+      propertyPath: immortal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5199053454099124934, guid: 202352e06a37a664689e864adc600ba4,
         type: 3}
       propertyPath: m_Color.r
@@ -22717,6 +22767,11 @@ PrefabInstance:
       propertyPath: mySquare
       value: 
       objectReference: {fileID: 906982968}
+    - target: {fileID: 91819024967632882, guid: 9bd0d3504a28cc646b7042d040ed01a2,
+        type: 3}
+      propertyPath: immortal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8247708946437982034, guid: 9bd0d3504a28cc646b7042d040ed01a2,
         type: 3}
       propertyPath: m_Color.g
@@ -22826,6 +22881,11 @@ PrefabInstance:
       propertyPath: mySquare
       value: 
       objectReference: {fileID: 1484656351}
+    - target: {fileID: 91819024967632882, guid: 9bd0d3504a28cc646b7042d040ed01a2,
+        type: 3}
+      propertyPath: immortal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8247708946437982034, guid: 9bd0d3504a28cc646b7042d040ed01a2,
         type: 3}
       propertyPath: m_Color.r
@@ -22940,6 +23000,11 @@ PrefabInstance:
       propertyPath: mySquare
       value: 
       objectReference: {fileID: 1484656351}
+    - target: {fileID: 605752078030708056, guid: dcf2a0706ec459c468eea4d3d7476161,
+        type: 3}
+      propertyPath: immortal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6641454010902503804, guid: dcf2a0706ec459c468eea4d3d7476161,
         type: 3}
       propertyPath: m_Color.r
@@ -23054,6 +23119,11 @@ PrefabInstance:
       propertyPath: mySquare
       value: 
       objectReference: {fileID: 872373842}
+    - target: {fileID: 6546563066980398250, guid: 202352e06a37a664689e864adc600ba4,
+        type: 3}
+      propertyPath: immortal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5199053454099124934, guid: 202352e06a37a664689e864adc600ba4,
         type: 3}
       propertyPath: m_Color.r
@@ -23257,6 +23327,11 @@ PrefabInstance:
       propertyPath: mySquare
       value: 
       objectReference: {fileID: 11187510}
+    - target: {fileID: 91819024967632882, guid: 9bd0d3504a28cc646b7042d040ed01a2,
+        type: 3}
+      propertyPath: immortal
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8247708946437982034, guid: 9bd0d3504a28cc646b7042d040ed01a2,
         type: 3}
       propertyPath: m_Color.r
