@@ -258,15 +258,21 @@ public class Player : MonoBehaviour
 
     public void TakeDamageFromDirection(int damage, Vector2 direction, Vector2 bullet_pos)
     {
-        Debug.Log(Vector2.Dot((shield.transform.rotation * Vector2.up).normalized, direction.normalized));
-        if(Vector2.Dot((shield.transform.rotation * Vector2.up).normalized, direction.normalized) >= -0.7)
+        if(shape == SHAPE.SQUARE)
         {
-            health -= damage;
+            if (Vector2.Dot((shield.transform.rotation * Vector2.up).normalized, direction.normalized) >= -0.7)
+            {
+                health -= damage;
+            }
+            else
+            {
+                Debug.Log("Blocked " + damage + " damage");
+                SoundManager.instance.Tink();
+            }
         }
         else
         {
-            Debug.Log("Blocked " + damage + " damage");
-            SoundManager.instance.Tink();
+            health -= damage;
         }
     }
 }
