@@ -12,8 +12,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Controls.unity
     guid: c189609ca0111a24aa5a1bb30780fae8
   - enabled: 1
+    path: Assets/Scenes/TestPlayScene.unity
+    guid: 1be92022c4d40aa4b8196cd4fb0d7df3
+  - enabled: 1
     path: Assets/Scenes/GamePlayScene.unity
     guid: 420014a67f8b6c242ac72ea92332078d
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: 747c16523ed3e004bbbd813d7e86a0c9
   - enabled: 1
     path: Assets/Scenes/TestPlayScene.unity
     guid: 1be92022c4d40aa4b8196cd4fb0d7df3
