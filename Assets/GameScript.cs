@@ -44,13 +44,25 @@ public class GameScript : MonoBehaviour
                     StageGrid.instance.SetPlayerAt(new Vector2Int(pos.x + i - 1, pos.y + j - 1));
                     p.transform.position = pos + new Vector2(i - 1 + 0.5f, j - 1 + 0.5f);
                     p.target = p.transform.position;
-                    Debug.Log("Resing player at: " + new Vector2Int(pos.x + i - 1, pos.y + j - 1));
-                    Debug.Log("Activating Player");
                     p.gameObject.SetActive(true);
-                    Debug.Log("Player is now: " + (p.gameObject.activeSelf ? "Active" : "Not Active"));
+                    //Debug.Log("Player is now: " + (p.gameObject.activeSelf ? "Active" : "Not Active"));
                     return;
                 }
             }
         }
+    }
+
+    public List<Player.TEAM> LivingTeams()
+    {
+        List<Player.TEAM> teams = new List<Player.TEAM>();
+        GameObject[] plrs = GameObject.FindGameObjectsWithTag("Player");
+        for(int i = 0; i < plrs.Length; i++)
+        {
+            if (plrs[i].activeSelf)
+            {
+                teams.Add(plrs[i].GetComponent<Player>().team);
+            }
+        }
+        return teams;
     }
 }

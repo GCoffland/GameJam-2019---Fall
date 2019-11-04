@@ -15,25 +15,20 @@ public class ConditionChecker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("uH:");
-        if (Player.players.Count > 0)
+        //Debug.Log("uH:");
+        if (GameScript.gs.deadPlayers.Count >= 12)
         {
-            Player.TEAM t = Player.players[0].team;
-            for (int i = 1; i < Player.players.Count; i++)
+            List<Player.TEAM> teams = GameScript.gs.LivingTeams();
+            Player.TEAM tem1 = teams[0];
+            for (int i = 0; i < teams.Count; i++)
             {
-                if (Player.players[i].team != t)
+                if(tem1 != teams[i])
                 {
                     return;
                 }
             }
-            winner = t;
+            winner = teams[0];
             SceneManager.LoadScene("GameOver");
-            return;
-        }
-        else
-        {
-            SceneManager.LoadScene("GameOver");
-            Debug.Log("NO ONE WINS!");
             return;
         }
     }

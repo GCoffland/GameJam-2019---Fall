@@ -18,15 +18,12 @@ public class ResScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Collided!");
         if(collision.tag == "Player")
         {
-            Debug.Log("With Player!");
             Player p = collision.gameObject.GetComponent<Player>();
             List<Player> dtm = GameScript.gs.GetDeadTeammates(p.team);
             if(dtm.Count > 0)
             {
-                Debug.Log("Resing!");
                 GameScript.gs.ResPlayer(dtm[0], (Vector2Int)StageGrid.instance.GetCellFromWorld((Vector2)transform.position));
                 Destroy(gameObject);
             }
