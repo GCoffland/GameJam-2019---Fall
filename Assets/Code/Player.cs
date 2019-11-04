@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
 {
+    public static List<Player> players = new List<Player>();
     public enum SHAPE { CIRCLE, TRIANGLE, SQUARE };
     public enum TEAM { ONE, TWO, THREE, FOUR, FIVE };
     public enum KEY { LEFT, RIGHT, FORWARD, ACTION};
@@ -18,7 +19,7 @@ public class Player : MonoBehaviour
 
     private float speed = 12.0f;
     private float rotationSpeed = 1400.0f;
-    private Vector2 target;
+    private Vector2 target; 
     private GameObject rotationTarget;
 
     public int health;
@@ -29,6 +30,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        players.Add(this);
         health = Constants.MAX_HEALTH;
         bullet = Resources.Load<GameObject>("Prefabs/BulletPrefab");
         gridPosition = StageGrid.instance.GetCellFromWorld(transform.position);
@@ -47,7 +49,7 @@ public class Player : MonoBehaviour
     {
         gridPosition = StageGrid.instance.GetCellFromWorld(transform.position);
         gridPosition.z = -1;
-
+        
         if (PressedKey(KEY.FORWARD))
         {
             Vector2Int direction = new Vector2Int(0,0);
@@ -71,16 +73,17 @@ public class Player : MonoBehaviour
         {
             rotationTarget.transform.Rotate(new Vector3(0, 0, -90));
         }
-        if (PressedKey(KEY.ACTION))
+        if (PressedKey(KEY.ACTION) || Input.anyKeyDown)
         {
             switch (shape)
             {
                 case (SHAPE.TRIANGLE):
                     FireBullet();
+                    SoundManager.instance.Fire();
                     break;
                 case (SHAPE.CIRCLE):
                     TeleportToSquare();
-                    Debug.Log("CIRCLE!!!!!");
+                    SoundManager.instance.Teleport();
                     break;
                 case (SHAPE.SQUARE):
                     break;
@@ -93,15 +96,38 @@ public class Player : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotationTarget.transform.rotation, step);
         if (health <= 0)
         {
+            CameraScript.instance.Shake(45, 0.55f);
+            SoundManager.instance.Die();
             Destroy(gameObject);
         }
     }
 
     private void TryMove(Vector2Int direction)
     {
-        if (StageGrid.instance.PlayerIsMoveValid((Vector2Int)gridPosition, direction))
+        if (shape == SHAPE.CIRCLE)
         {
-            Move(direction);
+            int val = StageGrid.instance.CircleIsMoveValid((Vector2Int)gridPosition, direction);
+            if ( val!= 0)
+            {
+                Move(direction);
+                if(val == 1)
+                {
+                    for ( int i = 0; i < players.Count; i++)
+                    {
+                        if(gridPosition.x == players[i].gridPosition.x && gridPosition.y == players[i].gridPosition.y)
+                        {
+                            Debug.Log("Stunned " + players[i].shape + " on team " + players[i].team + "!");
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (StageGrid.instance.PlayerIsMoveValid((Vector2Int)gridPosition, direction))
+            {
+                Move(direction);
+            }
         }
     }
 

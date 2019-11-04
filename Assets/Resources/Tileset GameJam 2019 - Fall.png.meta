@@ -13,13 +13,13 @@ TextureImporter:
     second: Tileset GameJam 2019 - Fall_2
   - first:
       213: 2727556729690084828
-    second: Tileset GameJam 2019 - Fall_3
+    second: Floor_3
   - first:
       213: -1385120834390485668
-    second: Tileset GameJam 2019 - Fall_4
+    second: Floor_2
   - first:
       213: 2270592385388533538
-    second: Tileset GameJam 2019 - Fall_5
+    second: FakeWall
   - first:
       213: -8493303076066642196
     second: Tileset GameJam 2019 - Fall_6
@@ -179,7 +179,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tileset GameJam 2019 - Fall_3
+      name: Floor_3
       rect:
         serializedVersion: 2
         x: 300
@@ -200,7 +200,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tileset GameJam 2019 - Fall_4
+      name: Floor_2
       rect:
         serializedVersion: 2
         x: 400
@@ -221,7 +221,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tileset GameJam 2019 - Fall_5
+      name: FakeWall
       rect:
         serializedVersion: 2
         x: 0

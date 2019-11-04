@@ -111,7 +111,7 @@ public class StageGrid : MonoBehaviour
     public bool PlayerIsMoveValid(Vector2Int current_pos, Vector2Int displacement)
     {
         Vector2Int pos = new Vector2Int(current_pos.x - tilemaps[0].cellBounds.xMin, current_pos.y - tilemaps[0].cellBounds.yMin);
-        Debug.Log("Cell at " + (pos.x + displacement.x) + ", " + (pos.y + displacement.y) + " is " + worldStatusArray[(pos.x + displacement.x), (pos.y + displacement.y)]);
+        //Debug.Log("Cell at " + (pos.x + displacement.x) + ", " + (pos.y + displacement.y) + " is " + worldStatusArray[(pos.x + displacement.x), (pos.y + displacement.y)]);
 
         if (worldStatusArray[(pos + displacement).x, (pos + displacement).y] == STATUS.UNOCCUPIED)
         {
@@ -120,6 +120,25 @@ public class StageGrid : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    public int CircleIsMoveValid(Vector2Int current_pos, Vector2Int displacement)
+    {
+        Vector2Int pos = new Vector2Int(current_pos.x - tilemaps[0].cellBounds.xMin, current_pos.y - tilemaps[0].cellBounds.yMin);
+        //Debug.Log("Cell at " + (pos.x + displacement.x) + ", " + (pos.y + displacement.y) + " is " + worldStatusArray[(pos.x + displacement.x), (pos.y + displacement.y)]);
+
+        if (worldStatusArray[(pos + displacement).x, (pos + displacement).y] == STATUS.UNTRAVERSABLE)
+        {
+            return 0;
+        }
+        else if (worldStatusArray[(pos + displacement).x, (pos + displacement).y] == STATUS.OCCUPIED)
+        {
+            return 1;
+        }
+        else
+        {
+            return 2;
         }
     }
 
