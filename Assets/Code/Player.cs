@@ -11,9 +11,12 @@ public class Player : MonoBehaviour
     public enum TEAM { ONE, TWO, THREE, FOUR, FIVE };
     public enum KEY { LEFT, RIGHT, FORWARD, ACTION};
 
+    public bool immortal = false;
+
     const float BULLET_SPEED = 20;
 
     public int cooldown = 0;
+    public int invincibilityFrames = 0;
 
     public SHAPE shape;
     public TEAM team;
@@ -31,14 +34,22 @@ public class Player : MonoBehaviour
     public GameObject shield;
     private Quaternion shieldRot;
 
+    private SpriteRenderer sprite;
+    private Color color;
+
+    Color lerpedColor;
+
     // Start is called before the first frame update
     void Start()
     {
+        sprite = GetComponent<SpriteRenderer>();
+        color = sprite.color;
+        lerpedColor = color;
         players.Add(this);
         health = Constants.MAX_HEALTH;
         bullet = Resources.Load<GameObject>("Prefabs/BulletPrefab");
         gridPosition = StageGrid.instance.GetCellFromWorld(transform.position);
-        StageGrid.instance.SetPlayerAt((Vector2Int)gridPosition);
+        if (shape != SHAPE.CIRCLE) { StageGrid.instance.SetPlayerAt((Vector2Int)gridPosition); }
         Vector2 startPos = (Vector2)StageGrid.instance.GetWorldFromCell(gridPosition);
         startPos.x += 0.5f;
         startPos.y += 0.5f;
@@ -52,57 +63,85 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(invincibilityFrames > 120 )
+        {
+            lerpedColor = Color.Lerp(color, Color.black, Mathf.PingPong(Time.time, 0.5f));
+            sprite.color = lerpedColor;
+        }
+        else
+        {
+            sprite.color = color;
+        }
+        if(invincibilityFrames > 0 && invincibilityFrames < 120)
+        {
+            Color c = sprite.color;
+            c.a = 0.5f;
+            sprite.color = c;
+        }
+        else
+        {
+            Color c = sprite.color;
+            c.a = 1f;
+            sprite.color = c;
+        }
         gridPosition = StageGrid.instance.GetCellFromWorld(transform.position);
         gridPosition.z = -1;
-        
-        if (PressedKey(KEY.FORWARD))
+        invincibilityFrames--;
+        if ( invincibilityFrames <= -50 )
         {
-            Vector2Int direction = new Vector2Int(0,0);
-            float rotation = transform.eulerAngles.z;
-            if(rotation < 22.5) { direction = new Vector2Int(0, 1); }
-            else if (rotation < 67.5) { direction = new Vector2Int(-1, 1); }
-            else if (rotation < 112.5) { direction = new Vector2Int(-1, 0); }
-            else if (rotation < 157.5) { direction = new Vector2Int(-1, -1); }
-            else if (rotation < 202.5) { direction = new Vector2Int(0, -1); }
-            else if (rotation < 247.5) { direction = new Vector2Int(1, -1); }
-            else if (rotation < 292.5) { direction = new Vector2Int(1, 0); }
-            else if (rotation < 337.5) { direction = new Vector2Int(1, 1); }
-            else if (rotation < 360.5) { direction = new Vector2Int(0, 1); }
-            TryMove(direction);
+            invincibilityFrames = 0;
         }
-        if (PressedKey(KEY.LEFT))
+        if (invincibilityFrames <= 120)
         {
-            rotationTarget.transform.Rotate(new Vector3(0, 0, 90));
-        }
-        if (PressedKey(KEY.RIGHT))
-        {
-            rotationTarget.transform.Rotate(new Vector3(0, 0, -90));
-        }
-        if (PressedKey(KEY.ACTION))
-        {
-            if (cooldown <= 0)
+            if (PressedKey(KEY.FORWARD))
             {
-                switch (shape)
-            {
-                case (SHAPE.TRIANGLE):
-                        FireBullet();
-                        cooldown = 120;
-                        SoundManager.instance.Fire();
-                break;
-                case (SHAPE.CIRCLE):
-                        TeleportToSquare();
-                        cooldown = 300;
-                        SoundManager.instance.Teleport();
-                break;
-                case (SHAPE.SQUARE):
-                        cooldown = 0;
-                        MoveShield();
-                break;
-                }
+                Vector2Int direction = new Vector2Int(0, 0);
+                float rotation = transform.eulerAngles.z;
+                if (rotation < 22.5) { direction = new Vector2Int(0, 1); }
+                else if (rotation < 67.5) { direction = new Vector2Int(-1, 1); }
+                else if (rotation < 112.5) { direction = new Vector2Int(-1, 0); }
+                else if (rotation < 157.5) { direction = new Vector2Int(-1, -1); }
+                else if (rotation < 202.5) { direction = new Vector2Int(0, -1); }
+                else if (rotation < 247.5) { direction = new Vector2Int(1, -1); }
+                else if (rotation < 292.5) { direction = new Vector2Int(1, 0); }
+                else if (rotation < 337.5) { direction = new Vector2Int(1, 1); }
+                else if (rotation < 360.5) { direction = new Vector2Int(0, 1); }
+                TryMove(direction);
             }
-            //Debug.Log("Someone tried to use an ability!");
+            if (PressedKey(KEY.LEFT))
+            {
+                rotationTarget.transform.Rotate(new Vector3(0, 0, 90));
+            }
+            if (PressedKey(KEY.RIGHT))
+            {
+                rotationTarget.transform.Rotate(new Vector3(0, 0, -90));
+            }
+            if (PressedKey(KEY.ACTION))
+            {
+                if (cooldown <= 0)
+                {
+                    switch (shape)
+                    {
+                        case (SHAPE.TRIANGLE):
+                            FireBullet();
+                            cooldown = 60;
+                            SoundManager.instance.Fire();
+                            break;
+                        case (SHAPE.CIRCLE):
+                            TeleportToSquare();
+                            cooldown = 300;
+                            SoundManager.instance.Teleport();
+                            break;
+                        case (SHAPE.SQUARE):
+                            cooldown = 0;
+                            MoveShield();
+                            break;
+                    }
+                }
+                //Debug.Log("Someone tried to use an ability!");
+            }
         }
-        if (health <= 0)
+        if (health <= 0 && !immortal)
         {
             CameraScript.instance.Shake(45, 0.55f);
             SoundManager.instance.Die();
@@ -133,18 +172,7 @@ public class Player : MonoBehaviour
             int val = StageGrid.instance.CircleIsMoveValid((Vector2Int)gridPosition, direction);
             if ( val!= 0)
             {
-                Move(direction);
-                if(val == 1)
-                {
-                    for ( int i = 0; i < players.Count; i++)
-                    {
-                        if(gridPosition.x == players[i].gridPosition.x && gridPosition.y == players[i].gridPosition.y)
-                        {
-                            Debug.Log("Stunned " + players[i].shape + " on team " + players[i].team + "!");
-                            SoundManager.instance.Stun();
-                        }
-                    }
-                }
+                CircleMove(direction);
             }
         }
         else
@@ -156,9 +184,38 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void GetStunned ()
+    {
+        if (invincibilityFrames <= 0)
+        {
+            invincibilityFrames = 240;
+            SoundManager.instance.Stun();
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (shape == SHAPE.CIRCLE)
+        {
+            Player p = collision.gameObject.GetComponent<Player>();
+            if (p != null && p.team != team)
+            {
+                p.GetStunned();
+            }
+        }
+    }
+
     public void Move(Vector2Int direction)
     {
         StageGrid.instance.PlayerMove((Vector2Int)gridPosition, direction);
+        gridPosition.y += direction.y;
+        gridPosition.x += direction.x;
+        target = (Vector2)StageGrid.instance.GetWorldFromCell(gridPosition);
+        target.x += 0.5f;
+        target.y += 0.5f;
+    }
+
+    public void CircleMove(Vector2Int direction)
+    {
         gridPosition.y += direction.y;
         gridPosition.x += direction.x;
         target = (Vector2)StageGrid.instance.GetWorldFromCell(gridPosition);
@@ -253,6 +310,11 @@ public class Player : MonoBehaviour
         shieldRot = rotationTarget.transform.rotation;
     }
 
+    private void OnDestroy()
+    {
+        Player.players.Remove(this);
+    }
+    
     public void TakeDamageFromDirection(int damage, Vector2 direction, Vector2 bullet_pos)
     {
         if(shape == SHAPE.SQUARE)
