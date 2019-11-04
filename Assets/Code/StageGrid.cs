@@ -96,6 +96,7 @@ public class StageGrid : MonoBehaviour
 
     public void SetPlayerAt(Vector2Int position)
     {
+        Debug.Log(" " + tilemaps[0].cellBounds.xMin + " " + tilemaps[0].cellBounds.yMin + "ASDFASDF");
         Vector2Int pos = new Vector2Int(position.x - tilemaps[0].cellBounds.xMin, position.y - tilemaps[0].cellBounds.yMin);
         if (worldStatusArray[pos.x, pos.y] == STATUS.UNTRAVERSABLE || worldStatusArray[pos.x, pos.y] == STATUS.OCCUPIED)
             Debug.Log("Bad player start position");
