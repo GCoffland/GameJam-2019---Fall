@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
 
     private float speed = 12.0f;
     private float rotationSpeed = 1400.0f;
-    private Vector2 target; 
+    public Vector2 target; 
     private GameObject rotationTarget;
 
     public int health;
@@ -106,7 +106,9 @@ public class Player : MonoBehaviour
         {
             CameraScript.instance.Shake(45, 0.55f);
             SoundManager.instance.Die();
-            Destroy(gameObject);
+            StageGrid.instance.PlayerDied((Vector2Int)gridPosition);
+            GameScript.gs.PlayerDied(this);
+            gameObject.SetActive(false);
         }
     }
 
@@ -251,11 +253,6 @@ public class Player : MonoBehaviour
         shieldRot = rotationTarget.transform.rotation;
     }
 
-    private void OnDestroy()
-    {
-        StageGrid.instance.PlayerDied((Vector2Int)gridPosition);
-    }
-
     public void TakeDamageFromDirection(int damage, Vector2 direction, Vector2 bullet_pos)
     {
         if(shape == SHAPE.SQUARE)
@@ -266,7 +263,8 @@ public class Player : MonoBehaviour
             }
             else
             {
-                Debug.Log("Blocked " + damage + " damage");
+                //Debug.Log("Blocked " + damage + " damage");
+                Debug.Log("Tink!");
                 SoundManager.instance.Tink();
             }
         }

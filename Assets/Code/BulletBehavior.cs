@@ -25,8 +25,9 @@ public class BulletBehavior : MonoBehaviour
         if (p != null)
         {
             if(p.team == team) { }
-            else if (collision.tag == "Shield")
+            else if(collision.tag == "Shield")
             {
+                //Debug.Log("Tink!");
                 SoundManager.instance.Tink();
             }
             else
@@ -34,6 +35,11 @@ public class BulletBehavior : MonoBehaviour
                 p.TakeDamageFromDirection(1, rb.velocity, transform.position);
                 Destroy(gameObject);
             }
+        }
+        else if (collision.tag == "Shield")
+        {
+            //Debug.Log("Tink!");
+            SoundManager.instance.Tink();
         }
         else
         {
